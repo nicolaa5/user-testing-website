@@ -1,20 +1,78 @@
 .App {
   text-align: center;
+  background-color: #f3f3f3;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: fixed;
 }
 
-.App-logo {
-  height: 40vmin;
+.App-navbar {
+  display: flex;
+  flex-direction: row;
+  font-family: roboto;
+}
+
+.App-navbar-item {
+  margin: 20px;
+  font-size: 20px;
+  color: #282828;
+  font-family: Roboto;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #f3f3f3;
+  min-height: 12vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-size: calc(5px + 2vmin);
+  font-family: Roboto;
+  color: #282828;
+}
+.Main-image {
+  display: flex;
+  width: 70%;
+}
+
+.App-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.button {
+  margin-top: 20px;
+  margin: 10px;
+}
+
+.App-body{
+  display: flex;
+}
+
+.App-body-left {
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 37%;
+  flex-direction: row;
+  align-items: right;
+  text-align: right;
+  justify-content: right;
+  font-size: calc(5px + 2vmin);
+  color: #282828;
+}
+
+.App-body-right {
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 63%;
+  flex-direction: row;
+  align-items: left;
+  text-align: left;
+  font-size: calc(5px + 2vmin);
+  font-family: Calibri;
+  color: #282828;
 }
 
 .App-link {
