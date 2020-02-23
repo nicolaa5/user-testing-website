@@ -5,6 +5,7 @@ import Navbar from "./Navbar.js";
 
 import {BrowserRouter as Router , Route, Switch} from "react-router-dom";
 import Users from "./Users.js"
+import Userflow from "./Userflow.js"
 import Companies from "./Companies.js"
 import Researchers from "./Researchers.js"
 
@@ -20,8 +21,9 @@ function App() {
           <Switch>
               <Route exact path="/"/>              
               <Route path="/users" component= {Users} />
-              <Route path="/companies" component= {Companies} />       
-              <Route path="/researchers" component= {Researchers} />   
+              <Route path="/userflow" component= {Userflow} />
+              {/* <Route path="/companies" component= {Companies} />        */}
+              {/* <Route path="/researchers" component= {Researchers} />    */}
           </Switch>
         </div>
         

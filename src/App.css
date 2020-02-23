@@ -32,9 +32,35 @@
   font-family: Roboto;
   color: #282828;
 }
-.Main-image {
-  display: flex;
+.Userflow {
+  display: grid;
+  max-height: 100%;
+  width: 100%;
+  /* grid-template-rows: 40%; */
+}
+
+.Userflow-A {
   width: 70%;
+  height: auto;
+  padding : 30px;  
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.Userflow-B {
+  width: 70%;
+  height: auto;
+  padding : 30px;
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+.Userflow-C {
+  width: 70%;
+  height: auto;
+  padding : 30px;
+  grid-column-start: 3;
+  grid-column-end: 4;
 }
 
 .App-buttons {
