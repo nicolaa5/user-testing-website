@@ -9,22 +9,21 @@ import Users from "components/Users.js"
 import Userflow from "components/Userflow.js"
 import Companies from "components/Companies.js"
 import Researchers from "components/Researchers.js"
+import {store} from 'index.js'
 
-const mapStateToProps = (state) => ({
-  dimensions: state.dimensions,
-  coordinates: state.coordinates
+const mapStateToProps = (store) => ({
+  dimensions: store.changeScreenDimensions.dimensions,
+  coordinates: store.moveScreen.coordinates
 })
 
-class App extends Component {
+class App extends React.Component {
 
   state = {}
 
   componentWillMount() {
-    console.log(this.props);
-    const {store} = this.props
-
-    const {dimensions} = store.dimensions;
-    const {coordinates} = store.coordinates
+    
+    const {coordinates} = this.props.coordinates;
+    const {dimensions} = this.props.dimensions
     
     this.setState({dimensions})
     this.setState({coordinates})

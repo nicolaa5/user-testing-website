@@ -31,9 +31,8 @@ const initialCoordinates = {
 };
 
 const initialDimensions = {
-  coordinates: [{"x":"1080", "y": "1920"}]
+  dimensions: [{"x":"1080", "y": "1920"}]
 };
-
 
 /** 
  * Function to handle actions and update the state of the store. 
@@ -90,7 +89,7 @@ const reducers = combineReducers ({
   changeScreenDimensions : dimensionsReducer
 })
 
-const store = createStore(reducers);
+export const store = createStore(reducers);
 
 // Pass the store into the Provider
 const AppWithStore = (
