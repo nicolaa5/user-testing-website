@@ -15,23 +15,40 @@ import { Provider } from 'react-redux'
 // The types of actions that you can dispatch to modify the state of the store
 export const types = {
   MOVE: "MOVE",
-  CHANGE_DIMENSIONS: "CHANGE_DIMENSIONS"
+  CHANGE_DIMENSIONS: "CHANGE_DIMENSIONS",
+  UPDATE_SCREEN: "UPDATE_SCREEN"
 };
 
 // Helper functions to dispatch actions, optionally with payloads
 export const actionCreators = {
-  move: item => {
-    return { type: types.MOVE, payload: item };
+  move: screen => {
+    return { type: types.MOVE, payload: screen };
+  },
+  changeDimensions: screen => {
+    return { type: types.CHANGE_DIMENSIONS, payload: screen };
+  },
+  updateScreen: screen => {
+    return { type: types.UPDATE_SCREEN, payload: screen };
   }
 };
 
 
 const initialCoordinates = {
-  coordinates: [{"x":"0", "y": "0"}]
+  coordinates: [{ x :"0", y : "0"}]
 };
 
 const initialDimensions = {
-  dimensions: [{"x":"1080", "y": "1920"}]
+  dimensions: [{ x :"1080", y: "1920"}]
+};
+
+const initialScreenAttributes = {   
+   screens: [{
+      id: "1", 
+      type: "Main activity", 
+      status: "inProgress", 
+      coordinates: {x: "0", y: "0"}, 
+      dimensions:{ x :"1080", y: "1920"}
+    }]     
 };
 
 /** 
@@ -52,7 +69,7 @@ export function moveScreenReducer (state = initialCoordinates, action)  {
   const { coordinates } = state;
   const { type, payload } = action;
 
-  console.log('reducer', state, action);
+  // console.log('reducer', state, action);
 
   switch (type) {
     case types.MOVE: {
@@ -70,7 +87,7 @@ export function dimensionsReducer (state = initialDimensions, action)  {
   const { dimensions } = state;
   const { type, payload } = action;
 
-  console.log('reducer', state, action);
+  // console.log('reducer', state, action);
 
   switch (type) {
     case types.CHANGE_DIMENSIONS: {
@@ -84,9 +101,28 @@ export function dimensionsReducer (state = initialDimensions, action)  {
   }
 };
 
+export function screenAttributeReducer (state = initialScreenAttributes, action)  {
+  const { screenAttributes } = state;
+  const { type, payload } = action;
+
+  // console.log('reducer', state, action);
+
+  switch (type) {
+    case types.UPDATE_SCREEN: {
+      return {
+        ...state,
+        coordinates: [payload, ...screenAttributes]
+      };
+    }
+    default :
+      return state;
+  }
+};
+
 const reducers = combineReducers ({
   moveScreen: moveScreenReducer, 
-  changeScreenDimensions : dimensionsReducer
+  changeScreenDimensions : dimensionsReducer,
+  screenAttributes : screenAttributeReducer
 })
 
 export const store = createStore(reducers);

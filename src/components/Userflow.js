@@ -10,15 +10,11 @@ import C from 'media/3.png';
 import {store} from 'index.js'
 import {actionCreators} from 'index.js'
 import { connect } from 'react-redux'
+import UserFlowScreen from './UserFlowScreen';
 
 class Userflow extends React.Component {
     componentWillMount() {
-        
-        const {coordinates} = this.props.coordinates;
-        const {dimensions} = this.props.dimensions
-        
-        this.setState({dimensions})
-        this.setState({coordinates})
+    
 
         this.unsubscribe = store.subscribe(() => {
         const {coordinates} = store.getState()
@@ -30,13 +26,32 @@ class Userflow extends React.Component {
         
     }
 
-    onMoveScreen = (index) => {
-        const {store} = this.props
-    
-        store.dispatch(actionCreators.move(index))
-    }
 
     render() {
+
+        const coordinates = this.props.coordinates;
+        const dimensions = this.props.dimensions;
+        const screens = this.props.screens;
+
+        console.log(screens);
+        var screenStatus = {
+            inProgress: [],
+            done: []
+          }
+  
+        screens.forEach ((screen) => {
+            console.log(screen.type);
+            screenStatus[screen.status].push(
+                <div key={screen.id} 
+                    onDragStart = {(event) => this.onDragStart(event, screen.screenName)}
+                    draggable
+                    className="draggable"
+                    style = {{backgroundColor: screen.bgcolor}}>
+                    {screen.taskName}
+                </div>
+            );
+        });
+
         return (
         <React.Fragment>     
 
@@ -49,10 +64,9 @@ class Userflow extends React.Component {
 
             <div className = "App-body-right">
                 <div className = "Userflow">
-                    <img className="Userflow-A" alt="cover" src= {A}/> 
-                    <img className="Userflow-B" alt="cover" src= {B}/> 
-                    <img className="Userflow-C" alt="cover" src= {C}/> 
-
+                    <UserFlowScreen className="Userflow-A" source = {A}/>
+                    <UserFlowScreen className="Userflow-B" source = {B}/>
+                    <UserFlowScreen className="Userflow-C" source = {C}/>
                 </div>
             </div>
         </React.Fragment>
@@ -66,7 +80,8 @@ class Userflow extends React.Component {
  */
 const mapStateToProps = (store) => ({
     dimensions: store.changeScreenDimensions.dimensions,
-    coordinates: store.moveScreen.coordinates
+    coordinates: store.moveScreen.coordinates,
+    screens: store.screenAttributes.screens
   })
 
 /**
