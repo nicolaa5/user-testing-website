@@ -4,13 +4,27 @@ import A from 'media/1.png';
 import B from 'media/2.png';
 import C from 'media/3.png';
 
-import { actionCreators } from 'reducer/userFlowReducer'
+/**
+ * Redux objects
+ */
+import {store} from 'index.js'
+import {actionCreators} from 'index.js'
+import { connect } from 'react-redux'
 
 class Userflow extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { width: 0 };
-      }
+    componentWillMount() {
+        
+        const {coordinates} = this.props.coordinates;
+        const {dimensions} = this.props.dimensions
+        
+        this.setState({dimensions})
+        this.setState({coordinates})
+
+        this.unsubscribe = store.subscribe(() => {
+        const {coordinates} = store.getState()
+        this.setState({coordinates})
+        })
+    }
 
     getUserFlowContent () {
         
@@ -45,5 +59,17 @@ class Userflow extends React.Component {
         );
     }
 }
-      
-export default Userflow;
+
+/**
+ * Maps the state to the component's props 
+ * @param {*} store : provides access to the app's redux store
+ */
+const mapStateToProps = (store) => ({
+    dimensions: store.changeScreenDimensions.dimensions,
+    coordinates: store.moveScreen.coordinates
+  })
+
+/**
+ * The connect() function connects a React component to a Redux store.
+ */
+export default connect(mapStateToProps)(Userflow)
