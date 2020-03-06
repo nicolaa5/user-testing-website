@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import UserSession from "./media/user-session.mp4";
+import UserSession from "media/user-session.mp4";
 
 
 function Users() {

@@ -7,8 +7,9 @@ function Navbar() {
     <nav >
       {/* <Link className="App-navbar-item" to="/">home</Link> */}
       <Link className="App-navbar-item" to= "/users"> users </Link>
-      <Link className="App-navbar-item" to= "/companies"> companies </Link>
-      <Link className="App-navbar-item" to= "/researchers"> researchers </Link>
+      <Link className="App-navbar-item" to= "/userflow"> userflow </Link>
+      {/* <Link className="App-navbar-item" to= "/companies"> companies </Link>
+      <Link className="App-navbar-item" to= "/researchers"> researchers </Link> */}
 
     </nav>
   );
