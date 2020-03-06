@@ -9,6 +9,11 @@ import {BrowserRouter } from "react-router-dom";
 // Import the reducer and create a store
 import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
+import UserFlowScreen from './components/UserFlowScreen';
+
+import A from 'media/1.png';
+import B from 'media/2.png';
+import C from 'media/3.png';
 
 
 
@@ -42,13 +47,29 @@ const initialDimensions = {
 };
 
 const initialScreenAttributes = {   
-   screens: [{
+   screens: [ 
+     {
       id: "1", 
-      type: "Main activity", 
+      type: "android_activity", 
       status: "inProgress", 
       coordinates: {x: "0", y: "0"}, 
-      dimensions:{ x :"1080", y: "1920"}
-    }]     
+      dimensions:{ width :"1080", height: "1920"}
+    },
+    {
+      id: "2", 
+      type: "android_fragment", 
+      status: "inProgress", 
+      coordinates: {x: "0", y: "0"}, 
+      dimensions:{ width :"1080", height: "1920"}
+    },
+    {
+      id: "3", 
+      type: "iOS_lifecycle", 
+      status: "inProgress", 
+      coordinates: {x: "0", y: "0"}, 
+      dimensions:{ width :"1080", height: "1920"}
+    }
+  ]     
 };
 
 /** 

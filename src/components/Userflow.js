@@ -26,6 +26,25 @@ class Userflow extends React.Component {
         
     }
 
+    onDragStart = (event, taskName) => {
+    	console.log('dragstart on div: ', taskName);
+    	event.dataTransfer.setData("taskName", taskName);
+	}
+	onDragOver = (event) => {
+	    event.preventDefault();
+    }
+    
+    onDrop = (event, status) => {
+	    let screens = this.props.screens.filter((task) => {
+	        return task;
+	    });
+
+	    this.setState({
+	        ...this.state,
+	        screens
+	    });
+	}
+
 
     render() {
 
@@ -46,29 +65,50 @@ class Userflow extends React.Component {
                     onDragStart = {(event) => this.onDragStart(event, screen.screenName)}
                     draggable
                     className="draggable"
+                    type = {screen.type}
+                    x = {screen.coordinates.x}
+                    y = {screen.coordinates.y}
+                    width = {screen.dimensions.width}
+                    height = {screen.coordinates.height}
                     style = {{backgroundColor: screen.bgcolor}}>
-                    {screen.taskName}
                 </div>
             );
         });
 
         return (
         <React.Fragment>     
+	      <div className="drag-container">
+	        <h2 className="head">To Do List Drag & Drop</h2>
+		    <div className="inProgress"
+	    		onDragOver={(event)=>this.onDragOver(event)}
+      			onDrop={(event)=>{this.onDrop(event, "inProgress")}}>
+	          <span className="group-header">In Progress</span>
+	          {screenStatus.inProgress}
+	        </div>
+	        <div className="droppable"
+	        	onDragOver={(event)=>this.onDragOver(event)}
+          		onDrop={(event)=>this.onDrop(event, "done")}>
+	          <span className="group-header">Done</span>
+	          {screenStatus.Done}
+	        </div>	        
+	      </div>
 
-            <div className = "App-body-left">
+
+            {/* <div className = "App-body-left">
                 <h2>UserFlow</h2>
                 <p>Visual overview of your application</p>
-                {/* <Button variant="outline-success" className = "button" >Sign Up</Button> */}
+                {/* <Button variant="outline-success" className = "button" >Sign Up</Button> 
                 <Button variant="outline-success" className = "button" >Sign Up</Button>
             </div>
 
             <div className = "App-body-right">
                 <div className = "Userflow">
+                    {screenStatus.inProgress}
                     <UserFlowScreen className="Userflow-A" source = {A}/>
                     <UserFlowScreen className="Userflow-B" source = {B}/>
                     <UserFlowScreen className="Userflow-C" source = {C}/>
                 </div>
-            </div>
+            </div> */}
         </React.Fragment>
         );
     }
