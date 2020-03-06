@@ -132,7 +132,8 @@ export function screenAttributeReducer (state = initialScreenAttributes, action)
     case types.UPDATE_SCREEN: {
       return {
         ...state,
-        coordinates: [payload, ...screenAttributes]
+        // coordinates: [payload, ...screenAttributes],
+        status: payload.status, 
       };
     }
     default :

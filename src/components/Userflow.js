@@ -11,11 +11,10 @@ import {store} from 'index.js'
 import {actionCreators} from 'index.js'
 import { connect } from 'react-redux'
 import UserFlowScreen from './UserFlowScreen';
+import { types } from '@babel/core';
 
 class Userflow extends React.Component {
-    componentWillMount() {
-    
-
+    componentWillMount() {   
         this.unsubscribe = store.subscribe(() => {
         const {coordinates} = store.getState()
         this.setState({coordinates})
@@ -26,28 +25,38 @@ class Userflow extends React.Component {
         
     }
 
-    onDragStart = (event, taskName) => {
-    	console.log('dragstart on div: ', taskName);
-    	event.dataTransfer.setData("taskName", taskName);
+    onDragStart = (event, type) => {
+    	event.dataTransfer.setData("type", type);
 	}
 	onDragOver = (event) => {
 	    event.preventDefault();
     }
     
     onDrop = (event, status) => {
-	    let screens = this.props.screens.filter((task) => {
-	        return task;
-	    });
+	    let type = event.dataTransfer.getData("type");
 
-	    this.setState({
-	        ...this.state,
-	        screens
-	    });
+	    let screens = this.props.screens.filter((screen) => {
+	        if (screen.type === type) {
+	            screen.status = status;
+	        }
+	        return screen;
+        });
+        
+        const action = {
+            type: types.UPDATE_SCREEN,
+            screens
+          }
+
+          store.dispatch(actionCreators.updateScreen(screens));
+
+	    // this.setState({
+	    //     ...this.state,
+	    //     screens
+	    // });
 	}
 
 
     render() {
-
         const coordinates = this.props.coordinates;
         const dimensions = this.props.dimensions;
         const screens = this.props.screens;
@@ -62,7 +71,7 @@ class Userflow extends React.Component {
             console.log(screen.type);
             screenStatus[screen.status].push(
                 <div key={screen.id} 
-                    onDragStart = {(event) => this.onDragStart(event, screen.screenName)}
+                    onDragStart = {(event) => this.onDragStart(event, screen.type)}
                     draggable
                     className="draggable"
                     type = {screen.type}
