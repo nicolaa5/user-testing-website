@@ -21,17 +21,34 @@ class Userflow extends React.Component {
         })
     }
 
+    /**
+     * Function to retrieve screenshots and app crawler results from the server
+     */
     getUserFlowContent () {
         
     }
 
+    /**
+     * Triggered when a UI element starts to get clicked/dragged
+     * {@link: event.dataTransfer} sets data that can be used in onDrop, such as IDs or info important for Drag/Drop logic
+     */
     onDragStart = (event, type) => {
     	event.dataTransfer.setData("type", type);
-	}
+    }
+    
+    /**
+     * Triggered when a UI element hovers over another DOM element
+     * {@link: event.preventDefault} overrides the browser's default blocking of dropping UI elements
+     */
 	onDragOver = (event) => {
 	    event.preventDefault();
     }
     
+    /**
+     * Triggered when a UI element is dropped on another DOM element
+     * @param event : Contains information such as target DOM element of the drop {@link: event.target} 
+     * as well as information that was initiated in {@link: onDragStart} contained in -> {@link: event.dataTransfer}
+     */
     onDrop = (event, status) => {
 	    let type = event.dataTransfer.getData("type");
 
@@ -41,18 +58,11 @@ class Userflow extends React.Component {
 	        }
 	        return screen;
         });
-        
-        const action = {
-            type: types.UPDATE_SCREEN,
-            screens
-          }
 
-          store.dispatch(actionCreators.updateScreen(screens));
+        store.dispatch(actionCreators.updateScreen(screens));
 
-	    // this.setState({
-	    //     ...this.state,
-	    //     screens
-	    // });
+        //Reset the datatransfer object
+        event.dataTransfer.clearData();
 	}
 
 
@@ -61,17 +71,16 @@ class Userflow extends React.Component {
         const dimensions = this.props.dimensions;
         const screens = this.props.screens;
 
-        console.log(screens);
         var screenStatus = {
             inProgress: [],
             done: []
           }
   
         screens.forEach ((screen) => {
-            console.log(screen.type);
             screenStatus[screen.status].push(
-                <div key={screen.id} 
+                <UserFlowScreen key={screen.id} 
                     onDragStart = {(event) => this.onDragStart(event, screen.type)}
+                    source = {screen.image}
                     draggable
                     className="draggable"
                     type = {screen.type}
@@ -80,13 +89,13 @@ class Userflow extends React.Component {
                     width = {screen.dimensions.width}
                     height = {screen.coordinates.height}
                     style = {{backgroundColor: screen.bgcolor}}>
-                </div>
+                </UserFlowScreen>
             );
         });
 
         return (
         <React.Fragment>     
-	      <div className="drag-container">
+	      {/* <div className="drag-container">
 	        <h2 className="head">To Do List Drag & Drop</h2>
 		    <div className="inProgress"
 	    		onDragOver={(event)=>this.onDragOver(event)}
@@ -100,24 +109,24 @@ class Userflow extends React.Component {
 	          <span className="group-header">Done</span>
 	          {screenStatus.Done}
 	        </div>	        
-	      </div>
+	      </div> */}
 
 
-            {/* <div className = "App-body-left">
+            <div className = "App-body-left">
                 <h2>UserFlow</h2>
                 <p>Visual overview of your application</p>
-                {/* <Button variant="outline-success" className = "button" >Sign Up</Button> 
-                <Button variant="outline-success" className = "button" >Sign Up</Button>
+                <Button variant="outline-success" className = "button" >Sign Up</Button> 
+	            {screenStatus.Done}
             </div>
 
             <div className = "App-body-right">
-                <div className = "Userflow">
+                <div className = "Userflow" 
+                    onDragOver={(event)=>this.onDragOver(event)}
+                    onDrop={(event)=>{this.onDrop(event, "inProgress")}}>
+
                     {screenStatus.inProgress}
-                    <UserFlowScreen className="Userflow-A" source = {A}/>
-                    <UserFlowScreen className="Userflow-B" source = {B}/>
-                    <UserFlowScreen className="Userflow-C" source = {C}/>
                 </div>
-            </div> */}
+            </div> 
         </React.Fragment>
         );
     }

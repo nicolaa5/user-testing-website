@@ -39,30 +39,6 @@
   /* grid-template-rows: 40%; */
 }
 
-.Userflow-A {
-  width: 70%;
-  height: auto;
-  padding : 30px;  
-  grid-column-start: 1;
-  grid-column-end: 2;
-}
-
-.Userflow-B {
-  width: 70%;
-  height: auto;
-  padding : 30px;
-  grid-column-start: 2;
-  grid-column-end: 3;
-}
-
-.Userflow-C {
-  width: 70%;
-  height: auto;
-  padding : 30px;
-  grid-column-start: 3;
-  grid-column-end: 4;
-}
-
 .App-buttons {
   display: flex;
   flex-direction: row;
@@ -133,9 +109,11 @@
 }
 
 .draggable {
-  width: 100px;
-  height: 100px;
-  background-color: yellow;
+  width: 30%;
+  height: auto;
+  padding : 30px;  
+  /* grid-column-start: 1;
+  grid-column-end: 2; */
   margin: 10px auto;
 }
 

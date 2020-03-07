@@ -53,21 +53,24 @@ const initialScreenAttributes = {
       type: "android_activity", 
       status: "inProgress", 
       coordinates: {x: "0", y: "0"}, 
-      dimensions:{ width :"1080", height: "1920"}
+      dimensions:{ width :"1080", height: "1920"},
+      image: A
     },
     {
       id: "2", 
       type: "android_fragment", 
       status: "inProgress", 
       coordinates: {x: "0", y: "0"}, 
-      dimensions:{ width :"1080", height: "1920"}
+      dimensions:{ width :"1080", height: "1920"},
+      image: B
     },
     {
       id: "3", 
       type: "iOS_lifecycle", 
       status: "inProgress", 
       coordinates: {x: "0", y: "0"}, 
-      dimensions:{ width :"1080", height: "1920"}
+      dimensions:{ width :"1080", height: "1920"},
+      image: C
     }
   ]     
 };
