@@ -9,11 +9,14 @@ import {BrowserRouter } from "react-router-dom";
 // Import the reducer and create a store
 import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
-import UserFlowScreen from './components/UserFlowScreen';
+import UserFlowScreen from './components/UserFlowContainer';
 
 import A from 'media/1.png';
 import B from 'media/2.png';
 import C from 'media/3.png';
+
+import { DndProvider } from 'react-dnd'
+import Backend from 'react-dnd-html5-backend'
 
 
 
@@ -136,6 +139,8 @@ export function screenAttributeReducer (state = initialScreenAttributes, action)
       return {
         ...state,
         // coordinates: [payload, ...screenAttributes],
+        x: payload.x,
+        y: payload.y,
         status: payload.status, 
       };
     }
@@ -156,7 +161,9 @@ export const store = createStore(reducers);
 const AppWithStore = (
   <Provider store={store}>
     <BrowserRouter>
-      <App />    
+      <DndProvider backend={Backend}>
+        <App />   
+      </DndProvider> 
     </BrowserRouter>
   </Provider>
 )

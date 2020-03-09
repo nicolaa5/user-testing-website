@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import Container from './Container'
 import Button from 'react-bootstrap/Button';
 import A from 'media/1.png';
 import B from 'media/2.png';
@@ -10,16 +11,25 @@ import C from 'media/3.png';
 import {store} from 'index.js'
 import {actionCreators} from 'index.js'
 import { connect } from 'react-redux'
-import UserFlowScreen from './UserFlowScreen';
+import UserFlowContainer from './UserFlowContainer';
 import { types } from '@babel/core';
+
+import { DndProvider } from 'react-dnd'
+import Backend from 'react-dnd-html5-backend'
+import Example from './Example'
 
 class Userflow extends React.Component {
     componentWillMount() {   
-        this.unsubscribe = store.subscribe(() => {
-        const {coordinates} = store.getState()
-        this.setState({coordinates})
+            this.unsubscribe = store.subscribe(() => {
+                const {coordinates} = store.getState()
+                this.setState({coordinates})
         })
     }
+
+    componentWillUnmount() {
+        window.removeEventListener('mousemove', this.handleMouseMove);
+        window.removeEventListener('mouseup', this.handleMouseUp);
+      }
 
     /**
      * Function to retrieve screenshots and app crawler results from the server
@@ -34,6 +44,20 @@ class Userflow extends React.Component {
      */
     onDragStart = (event, type) => {
     	event.dataTransfer.setData("type", type);
+    }
+
+    /**
+     * Triggered for each frame that an element is dragged
+     */
+    onDrag = (event, id) => {
+        event.preventDefault();
+        this.props.screens.forEach((screen) => {
+            if (screen.id === id) {
+                screen.x = event.x;
+                screen.y = event.y;
+                store.dispatch(actionCreators.updateScreen(screen));
+            }
+        });
     }
     
     /**
@@ -59,12 +83,10 @@ class Userflow extends React.Component {
 	        return screen;
         });
 
-        store.dispatch(actionCreators.updateScreen(screens));
 
         //Reset the datatransfer object
         event.dataTransfer.clearData();
-	}
-
+    }
 
     render() {
         const coordinates = this.props.coordinates;
@@ -76,55 +98,37 @@ class Userflow extends React.Component {
             done: []
           }
   
-        screens.forEach ((screen) => {
-            screenStatus[screen.status].push(
-                <UserFlowScreen key={screen.id} 
-                    onDragStart = {(event) => this.onDragStart(event, screen.type)}
-                    source = {screen.image}
-                    draggable
-                    className="draggable"
-                    type = {screen.type}
-                    x = {screen.coordinates.x}
-                    y = {screen.coordinates.y}
-                    width = {screen.dimensions.width}
-                    height = {screen.coordinates.height}
-                    style = {{backgroundColor: screen.bgcolor}}>
-                </UserFlowScreen>
-            );
-        });
+        // screens.forEach ((screen) => {
+        //     screenStatus[screen.status].push(
+        //         <UserFlowContainer key={screen.id} 
+        //             onDragStart = {(event) => this.onDragStart(event, screen.id)}
+        //             onDrag = {(event) => this.onDrag(event, screen.id)}
+        //             source = {screen.image}
+        //             draggable 
+        //             className="draggable"
+        //             type = {screen.type}
+        //             x = {screen.coordinates.x}
+        //             y = {screen.coordinates.y}
+        //             width = {screen.dimensions.width}
+        //             height = {screen.coordinates.height}
+        //             style = {{backgroundColor: screen.bgcolor}}>
+        //         </UserFlowContainer>
+        //     );
+        // });
 
         return (
         <React.Fragment>     
-	      {/* <div className="drag-container">
-	        <h2 className="head">To Do List Drag & Drop</h2>
-		    <div className="inProgress"
-	    		onDragOver={(event)=>this.onDragOver(event)}
-      			onDrop={(event)=>{this.onDrop(event, "inProgress")}}>
-	          <span className="group-header">In Progress</span>
-	          {screenStatus.inProgress}
-	        </div>
-	        <div className="droppable"
-	        	onDragOver={(event)=>this.onDragOver(event)}
-          		onDrop={(event)=>this.onDrop(event, "done")}>
-	          <span className="group-header">Done</span>
-	          {screenStatus.Done}
-	        </div>	        
-	      </div> */}
-
-
             <div className = "App-body-left">
                 <h2>UserFlow</h2>
                 <p>Visual overview of your application</p>
                 <Button variant="outline-success" className = "button" >Sign Up</Button> 
-	            {screenStatus.Done}
             </div>
 
             <div className = "App-body-right">
-                <div className = "Userflow" 
-                    onDragOver={(event)=>this.onDragOver(event)}
-                    onDrop={(event)=>{this.onDrop(event, "inProgress")}}>
+                <div className = "grid">
+                    <UserFlowContainer />
 
-                    {screenStatus.inProgress}
+                    {/* {screenStatus.inProgress} */}
                 </div>
             </div> 
         </React.Fragment>
