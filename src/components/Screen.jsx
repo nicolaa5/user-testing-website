@@ -8,10 +8,10 @@ import C from 'media/3.png';
 
 const style = {
   position: 'absolute',
-  border: '1px dashed gray',
-  backgroundColor: 'white',
-  padding: '0.5rem 1rem',
   cursor: 'move',
+  // border: '1px dashed gray',
+  // backgroundColor: 'white',
+  // padding: '0.5rem 1rem',
 }
 
 const Screen = ({ id, left, top, hideSourceOnDrag, image, children }) => {
@@ -28,7 +28,10 @@ const Screen = ({ id, left, top, hideSourceOnDrag, image, children }) => {
   }
 
   return (
-    <img src={image} className = "draggable" ref={drag} style={{ ...style, left, top }}/>
+    <img src={image} 
+      className = "Userflow-screen" 
+      ref={drag} 
+      style={{ ...style, left, top }}/>
   )
 }
 export default Screen

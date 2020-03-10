@@ -11,8 +11,8 @@ import C from 'media/3.png';
 const styles = {
   width: 800,
   height: 600,
-  border: '1px solid black',
   position: 'relative',
+  // border: '1px solid black',
 }
 const UserFlowContainer = () => {
   
@@ -62,7 +62,7 @@ const UserFlowContainer = () => {
   return (
     <div ref={drop} style={styles}>
       {Object.keys(screens).map(key => {
-        const { left, top, title, image } = screens[key]
+        const { left, top, image } = screens[key]
         return (
           <Screen
             key={key}
