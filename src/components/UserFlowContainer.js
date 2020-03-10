@@ -38,7 +38,11 @@ const UserFlowContainer = () => {
       }
   });
 
-  const [undefined, drop] = useDrop({
+  /**
+   * A hook for implementing a droppable area 
+   * @note: First argument is missing because there is no variable/state to update
+   */
+  const [, drop] = useDrop({
     accept: ItemTypes.SCREEN,
     drop(item, monitor) {
       const delta = monitor.getDifferenceFromInitialOffset()
