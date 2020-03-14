@@ -1,22 +1,37 @@
 import React, { useState } from 'react'
-import { useDrop } from 'react-dnd'
-import update from 'immutability-helper'
+import { useDrop, XYCoord } from 'react-dnd'
 import ItemTypes from './ItemTypes'
 import Screen from './Screen'
+import update from 'immutability-helper'
+import { DragItem } from './interfaces'
 
 import A from 'media/1.png';
 import B from 'media/2.png';
 import C from 'media/3.png';
 
-const styles = {
+const styles : React.CSSProperties = {
   width: 800,
   height: 600,
   position: 'relative',
   // border: '1px solid black',
 }
-const UserFlowContainer = () => {
-  
-  const [screens, setScreens] = useState({
+
+export interface ContainerProps {
+  hideSourceOnDrag: boolean
+}
+
+export interface ScreenState {
+  [key: string]: {
+     top: number; 
+     left: number;
+     image : string;
+    } 
+}
+
+
+
+const UserFlowContainer : React.FC<ContainerProps> = ({hideSourceOnDrag}) => {  
+  const [screens, setScreens] = useState<ScreenState>({
     a: { top: 20,
          left: 80, 
          image: A  
@@ -43,17 +58,17 @@ const UserFlowContainer = () => {
    * @note: First argument is missing because there is no variable/state to update
    */
   const [, drop] = useDrop({
-    accept: ItemTypes.SCREEN,
-    drop(item, monitor) {
-      const delta = monitor.getDifferenceFromInitialOffset()
+    accept: ItemTypes.BOX,
+    drop(item: DragItem, monitor) {
+      const delta = monitor.getDifferenceFromInitialOffset() as XYCoord
       const left = Math.round(item.left + delta.x)
       const top = Math.round(item.top + delta.y)
       moveScreen(item.id, left, top)
       return undefined
     },
-  });
+  })
 
-  const moveScreen = (id, left, top) => {
+  const moveScreen = (id: string, left: number, top: number) => {
     setScreens(
       update(screens, {
         [id]: {
@@ -61,7 +76,7 @@ const UserFlowContainer = () => {
         },
       }),
     )
-  };
+  }
   
   return (
     <div ref={drop} style={styles}>
