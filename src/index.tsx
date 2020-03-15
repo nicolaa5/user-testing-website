@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { render } from 'react-dom'
 import './index.css';
-import App from 'App';
-import * as serviceWorker from 'serviceWorker';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
 import {BrowserRouter } from "react-router-dom";
 
 // Import the reducer and create a store
@@ -11,9 +11,9 @@ import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import UserFlowScreen from './components/UserFlowContainer';
 
-import A from 'media/1.png';
-import B from 'media/2.png';
-import C from 'media/3.png';
+import A from './media/1.png';
+import B from './media/2.png';
+import C from './media/3.png';
 
 import { DndProvider } from 'react-dnd'
 import Backend from 'react-dnd-html5-backend'
@@ -29,13 +29,13 @@ export const types = {
 
 // Helper functions to dispatch actions, optionally with payloads
 export const actionCreators = {
-  move: screen => {
+  move: (screen: any) => {
     return { type: types.MOVE, payload: screen };
   },
-  changeDimensions: screen => {
+  changeDimensions: (screen: any) => {
     return { type: types.CHANGE_DIMENSIONS, payload: screen };
   },
-  updateScreen: screen => {
+  updateScreen: (screen: any) => {
     return { type: types.UPDATE_SCREEN, payload: screen };
   }
 };
@@ -92,7 +92,7 @@ const initialScreenAttributes = {
  * @param state 
  * @param action 
  */
-export function moveScreenReducer (state = initialCoordinates, action)  {
+export function moveScreenReducer (state = initialCoordinates, action : any)  {
   const { coordinates } = state;
   const { type, payload } = action;
 
@@ -110,7 +110,7 @@ export function moveScreenReducer (state = initialCoordinates, action)  {
   }
 };
 
-export function dimensionsReducer (state = initialDimensions, action)  {
+export function dimensionsReducer (state = initialDimensions, action : any)  {
   const { dimensions } = state;
   const { type, payload } = action;
 
@@ -128,8 +128,7 @@ export function dimensionsReducer (state = initialDimensions, action)  {
   }
 };
 
-export function screenAttributeReducer (state = initialScreenAttributes, action)  {
-  const { screenAttributes } = state;
+export function screenAttributeReducer (state = initialScreenAttributes, action : any)  {
   const { type, payload } = action;
 
   // console.log('reducer', state, action);

@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import * as React from 'react'
+import { useState } from 'react'
 import { useDrop, XYCoord } from 'react-dnd'
 import ItemTypes from './ItemTypes'
 import Screen from './Screen'
 import update from 'immutability-helper'
 import { DragItem } from './interfaces'
 
-import A from 'media/1.png';
-import B from 'media/2.png';
-import C from 'media/3.png';
+import A from '../media/1.png';
+import B from '../media/2.png';
+import C from '../media/3.png';
 
 const styles : React.CSSProperties = {
   width: 800,
@@ -58,8 +59,8 @@ const UserFlowContainer : React.FC<ContainerProps> = ({hideSourceOnDrag}) => {
    * @note: First argument is missing because there is no variable/state to update
    */
   const [, drop] = useDrop({
-    accept: ItemTypes.BOX,
-    drop(item: DragItem, monitor) {
+    accept: ItemTypes.SCREEN,
+    drop(item: DragItem, monitor : any) {
       const delta = monitor.getDifferenceFromInitialOffset() as XYCoord
       const left = Math.round(item.left + delta.x)
       const top = Math.round(item.top + delta.y)
@@ -88,7 +89,7 @@ const UserFlowContainer : React.FC<ContainerProps> = ({hideSourceOnDrag}) => {
             id={key}
             left={left}
             top={top}
-            hideSourceOnDrag={true}
+            hideSourceOnDrag={hideSourceOnDrag}
             image = {image}
           />
         )

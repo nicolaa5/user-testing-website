@@ -1,9 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 import Button from 'react-bootstrap/Button';
-import UserSession from "media/user-session.mp4";
+import UserSession from "../media/user-session.mp4";
 
 
-function Users() {
+function Users() { 
     return (
         <React.Fragment>
 
@@ -14,7 +14,7 @@ function Users() {
             </div>
 
             <div className = "App-body-right">
-                <video width="520" height="520" autoPlay loop autobuffer = "true" muted playsInline >
+                <video width="520" height="520" autoPlay loop muted playsInline >
                 <source src= {UserSession} type="video/mp4"/>
                 <source src="/src/media/user-session.ogg" type="video/ogg"/>
                 </video>     

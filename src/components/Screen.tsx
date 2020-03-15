@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import * as React  from 'react';
+import { useState, useEffect } from 'react';
 import { useDrag } from 'react-dnd'
 import ItemTypes from './ItemTypes'
 
 /**
  * Redux objects
  */
-import {store} from 'index.js'
+import {store} from '../index'
 import { connect } from 'react-redux'
 
-import A from 'media/1.png';
-import B from 'media/2.png';
-import C from 'media/3.png';
-
-const style = {
+const style : React.CSSProperties = {
   position: 'absolute',
   cursor: 'move',
   // border: '1px dashed gray',
@@ -20,7 +17,15 @@ const style = {
   // padding: '0.5rem 1rem',
 }
 
-const Screen = ({ id, left, top, hideSourceOnDrag, image, children }) => {
+export interface ScreenProps {
+  id: any
+  left: number
+  top: number
+  image : string
+  hideSourceOnDrag?: boolean
+}
+
+const Screen : React.FC<ScreenProps> = ({ id, left, top, hideSourceOnDrag, image, children }) => {
 
   useEffect(() => {
     
@@ -52,7 +57,7 @@ const Screen = ({ id, left, top, hideSourceOnDrag, image, children }) => {
  * Maps the state to the component's props 
  * @param {*} store : provides access to the app's redux store
  */
-const mapStateToProps = (store) => ({
+const mapStateToProps = (store : any) => ({
   dimensions: store.changeScreenDimensions.dimensions,
   coordinates: store.moveScreen.coordinates,
   screens: store.screenAttributes.screens
