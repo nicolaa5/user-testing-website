@@ -1496,9 +1496,9 @@
     csstype "^2.2.0"
 
 "@types/redux@^4.0.5":
-  version "3.6.31"
-  resolved "https://registry.yarnpkg.com/@types/redux/-/redux-3.6.31.tgz#40eafa7575db36b912ce0059b85de98c205b0708"
-  integrity sha1-QOr6dXXbNrkSzgBZuF3pjCBbBwg=
+  version "3.3.26"
+  resolved "https://registry.yarnpkg.com/@types/redux/-/redux-3.3.26.tgz#e3e7f4c5483d6ca49365fad624eaeb58dbd44480"
+  integrity sha1-4+f0xUg9bKSTZfrWJOrrWNvURIA=
 
 "@types/sizzle@*":
   version "2.3.2"
