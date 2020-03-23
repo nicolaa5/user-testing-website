@@ -1,26 +1,31 @@
-import React, { Component } from 'react'
+import * as React from 'react'
+import { Component } from 'react'
 import {BrowserRouter as Router , Route, Switch} from "react-router-dom";
 
 /**
  * App components
  */
-import Navbar from "components/Navbar.js";
-import Users from "components/Users.js"
-import Userflow from "components/Userflow.js"
-import Companies from "components/Companies.js"
-import Researchers from "components/Researchers.js"
+import Navbar from "./components/Navbar";
+import Users from "./components/Users"
+import Userflow from "./components/Userflow"
+import Companies from "./components/Companies"
+import Researchers from "./components/Researchers"
 
 /**
  * CSS files
  */
-import 'App.css';
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default class App extends React.Component {
+interface AppProps {
+  
+}
+export default class App extends React.Component<AppProps> {
+
   render() {
     return (
       <Router>
-        <div className="App">
+        <div className ="App">
           <header className="App-header">          
             <Navbar/>
           </header>
